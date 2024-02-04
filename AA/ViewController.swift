@@ -45,13 +45,14 @@ class ViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.loadData()
-    }
-    
     func setupUI(){
         view.backgroundColor = UIColor(red: 222/255, green: 206/255, blue: 186/255, alpha: 1)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.right.fill"), style: .done, target: self, action: #selector(shareTapped))
+        navigationItem.rightBarButtonItem?.tintColor = .black
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .done, target: self, action: #selector(listTapped))
+        navigationItem.leftBarButtonItem?.tintColor = .black
         
         view.addSubview(label)
         view.addSubview(authorLabel)
@@ -69,6 +70,15 @@ class ViewController: UIViewController {
             authorLabel.topAnchor.constraint(equalTo: label.bottomAnchor,constant: 10),
             authorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        
+        
+    }
+    
+    @objc func shareTapped(){
+        
+    }
+    
+    @objc func listTapped(){
         
     }
     
@@ -98,9 +108,9 @@ extension ViewController: UITabBarControllerDelegate{
             }else{
                 tabBarController.tabBar.items?[selectedIndex].image = UIImage(systemName: "heart")
             }
-
-
         }
+        
+        
     }
 }
 

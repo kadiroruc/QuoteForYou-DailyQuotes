@@ -19,6 +19,12 @@ class Constants{
             return "https://api.quotable.io"
         }
     }
+    
+    public var lastNotificationDateKey: String{
+        get{
+            return "lastNotificationDateKey"
+        }
+    }
 
     
 }
