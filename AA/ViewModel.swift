@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import UIKit
 import UserNotifications
+import CoreData
 
 
 protocol ViewModelDelegate: AnyObject{
@@ -19,6 +21,9 @@ class ViewModel: NSObject, UNUserNotificationCenterDelegate{
     private var quote: Quote = []
     private var errorMessage: Error?
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var favoriteQuotes = [QuoteDataModel]()
+    
     
     
     override init() {
@@ -27,6 +32,8 @@ class ViewModel: NSObject, UNUserNotificationCenterDelegate{
         //UNUserNotificationCenter.current().delegate = self
         scheduleNotification()
         checkLastUpdateDate()
+        
+        loadFavoriteQuotes()
         
         
     }
@@ -142,4 +149,37 @@ class ViewModel: NSObject, UNUserNotificationCenterDelegate{
     }
 
     
+}
+
+//MARK: - Core Data
+extension ViewModel{
+    func saveFavoriteQuote(quoteContent: String, quoteAuthor: String){
+        let quoteDataModel = QuoteDataModel(context: self.context)
+        quoteDataModel.content = quoteContent
+        quoteDataModel.author = quoteAuthor
+        
+        self.favoriteQuotes.append(quoteDataModel)
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving favorite Quotes \(error)")
+        }
+    }
+    
+    func loadFavoriteQuotes(){
+        
+        let request: NSFetchRequest<QuoteDataModel> = QuoteDataModel.fetchRequest()
+        
+        do{
+            favoriteQuotes = try context.fetch(request)
+        }catch{
+            print("Error loading favorite Quotes \(error)")
+        }
+    }
+    
+    func getFavoriteQuotes() -> [QuoteDataModel]{
+        
+        return favoriteQuotes
+    }
 }

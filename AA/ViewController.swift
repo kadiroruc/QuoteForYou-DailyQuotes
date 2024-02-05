@@ -23,6 +23,13 @@ class ViewController: UIViewController {
         label.textColor = UIColor(white: 0.2, alpha: 1)
         return label
     }()
+    
+    // VARIABLES
+    private let viewModel: ViewModel
+    var favoriteBarItemSelected: Bool = false
+    
+    private let userDefaults = UserDefaults.standard
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +44,9 @@ class ViewController: UIViewController {
             authorLabel.text = "- \(currentQuoteAuthor)"
         }
 
-        //scheduleLoadData()
         
     }
-    
-    private let viewModel: ViewModel
-    var favoriteBarItemSelected: Bool = false
-    
-    private let userDefaults = UserDefaults.standard
-    var timer: Timer?
+
     
     required init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -84,31 +85,6 @@ class ViewController: UIViewController {
         ])
         
     }
-    
-    func scheduleLoadData(){
-        timer?.invalidate()
-        let currentDate = Date()
-        let calendar = Calendar.current
-        
-        // 9:00'a kadar olan süreyi hesapla
-        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: currentDate)
-        components.hour = 19
-        components.minute = 39
-        components.second = 00
-        let targetDate = calendar.date(from: components)!
-        
-        // Hedef tarihe kadar kalan süreyi hesapla
-        let timeInterval = targetDate.timeIntervalSince(currentDate)
-        
-        if timeInterval > 0{
-            print(timeInterval)
-            timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] timer in
-                
-                self?.viewModel.loadData()
-            }
-        }
-
-    }
 
     
     @objc func shareTapped(){
@@ -116,7 +92,8 @@ class ViewController: UIViewController {
     }
     
     @objc func listTapped(){
-        
+        let favoriteQuotes = viewModel.getFavoriteQuotes()
+        //print(favoriteQuotes[1].content)
     }
     
 }
@@ -145,6 +122,21 @@ extension ViewController: UITabBarControllerDelegate{
             favoriteBarItemSelected.toggle()
             if favoriteBarItemSelected{
                 tabBarController.tabBar.items?[selectedIndex].image = UIImage(systemName: "heart.fill")
+                
+                
+                if let currentQuote = userDefaults.object(forKey: "currentQuote")as? String{
+                    let quoteContent = currentQuote
+
+                    if let currentQuoteAuthor = userDefaults.object(forKey: "currentQuoteAuthor")as? String{
+                        let quoteAuthor = currentQuoteAuthor
+
+                        viewModel.saveFavoriteQuote(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                    }
+
+                }
+
+                
+                
             }else{
                 tabBarController.tabBar.items?[selectedIndex].image = UIImage(systemName: "heart")
             }

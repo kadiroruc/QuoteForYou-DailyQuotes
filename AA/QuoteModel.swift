@@ -8,15 +8,18 @@
 import Foundation
 
 struct QuoteModel: Codable {
-    let id, content, author: String
-    let tags: [String]
-    let authorSlug: String
-    let length: Int
-    let dateAdded, dateModified: String
+    //let id: String
+    let content: String
+    let author: String
+    //let tags: [String]
+    //let authorSlug: String
+    //let length: Int
+    //let dateAdded, dateModified: String
 
     enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case content, author, tags, authorSlug, length, dateAdded, dateModified
+        //case id = "_id"
+        //case content, author, tags, authorSlug, length, dateAdded, dateModified
+        case content, author
     }
 }
 
