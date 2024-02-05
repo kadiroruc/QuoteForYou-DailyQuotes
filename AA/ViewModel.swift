@@ -8,76 +8,120 @@
 import Foundation
 import UserNotifications
 
+
 protocol ViewModelDelegate: AnyObject{
     func didUpdate()
 }
 
-class ViewModel{
+class ViewModel: NSObject, UNUserNotificationCenterDelegate{
     weak var delegate: ViewModelDelegate?
     
     private var quote: Quote = []
     private var errorMessage: Error?
     
-    var timer: Timer?
     
-    init() {
-        checkLastNotificationDate()
+    
+    override init() {
+        super.init()
+        
+        //UNUserNotificationCenter.current().delegate = self
+        scheduleNotification()
+        checkLastUpdateDate()
+        
+        
     }
+
+
     
-    func checkLastNotificationDate(){
+    func checkLastUpdateDate(){
+        
         let userDefaults = UserDefaults.standard
-        if let lastNotificationDate = userDefaults.object(forKey: Constants.shared.lastNotificationDateKey) as? Date {
-            // Son bildirim gönderme tarihini al
+        
+//        // UserDefaults'taki tüm değerleri temizleme
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
+
+        
+        
+        if let previousUpdateTime = userDefaults.object(forKey: "previousUpdateTime") as? Date{
+            
             let currentDate = Date()
             let calendar = Calendar.current
-            if let differenceInHours = calendar.dateComponents([.second], from: lastNotificationDate, to: currentDate).second, differenceInHours >= 30 {
+            
+            print("Önceki yükleme tarihi: \(previousUpdateTime)")
+            print("Şuanki zaman:\(currentDate)")
+            if let difference = calendar.dateComponents([.hour], from: previousUpdateTime, to: currentDate).hour, difference >= 24{
                 loadData()
-                // Son bildirimden 24 saat veya daha fazla zaman geçti, işlemi gerçekleştir
-                print("24 saat geçti! İşlem yapılıyor ve bildirim gönderiliyor.")
-                // İşlemi gerçekleştir ve yeni bildirimi gönder
-                performActionAndSendNotification()
-                // Son bildirim tarihini güncelle
-                userDefaults.set(currentDate, forKey: Constants.shared.lastNotificationDateKey)
-            } else {
-                print("Henüz 24 saat geçmemiş, işlem yapma.")
+                
+                var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: currentDate)
+                dateComponents.hour = 9
+                dateComponents.minute = 00
+                dateComponents.second = 00
+                
+                if let previousUpdateDate = calendar.date(from: dateComponents){
+                    print("Yeni son yükleme tarihi\(previousUpdateDate)")
+                    userDefaults.set(previousUpdateDate, forKey: "previousUpdateTime")
+                }
+                
+                print("24 saat geçti ve veriler yüklendi.")
+                
+            }else{
+                print("24 saat geçmedi")
             }
-        } else {
-            loadData()
-            // İlk kez bildirim gönderiliyor, işlemi gerçekleştir ve bildirim gönder
-            print("İlk kez bildirim gönderiliyor.")
-            performActionAndSendNotification()
-            // Son bildirim tarihini kaydet
-            userDefaults.set(Date(), forKey: Constants.shared.lastNotificationDateKey)
+            
+        }else{
+            
+            let currentDate = Date()
+            let calendar = Calendar.current
+            
+            var dateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+            dateComponents.day! -= 1
+            dateComponents.hour = 9
+            dateComponents.minute = 00
+            dateComponents.second = 00
+            
+            if let previousUpdateDate = calendar.date(from: dateComponents){
+                userDefaults.set(previousUpdateDate, forKey: "previousUpdateTime")
+            }
         }
-    }
-    
-    func performActionAndSendNotification() {
-        // İşlemi gerçekleştir
-        print("İşlem gerçekleştirildi.")
         
-        // Bildirim oluştur
-        createNotification()
+
+        
+
+        
+
     }
     
-    func createNotification() {
+    func scheduleNotification(){
         let content = UNMutableNotificationContent()
-        content.title = "Hatırlatma"
-        content.body = "Bir şeyler yapma zamanı!"
+        content.title = "App name"
+        content.body = "Your Daily Quote is Ready"
         content.sound = .default
         
-        // Bildirimi hemen göster
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) // Hemen göster, tekrar etme
+        
+        var dateComponents = DateComponents()
+        dateComponents.hour = 09
+        dateComponents.minute = 00
+        dateComponents.second = 00
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        
+        // Bildirimi oluştur
         let request = UNNotificationRequest(identifier: "reminderNotification", content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Bildirim eklenirken bir hata oluştu: \(error.localizedDescription)")
             } else {
-                print("Bildirim başarıyla eklendi.")
+                print("Bildirim planı başarıyla eklendi.")
             }
         }
     }
     
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//        self.loadData()
+//    }
     
     
     func loadData(){

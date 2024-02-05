@@ -29,11 +29,23 @@ class ViewController: UIViewController {
         
         setupUI()
         navigationController?.tabBarController?.delegate = self
-    }
+        
+        if let currentQuote = userDefaults.object(forKey: "currentQuote")as? String{
+            label.text = currentQuote
+        }
+        if let currentQuoteAuthor = userDefaults.object(forKey: "currentQuoteAuthor")as? String{
+            authorLabel.text = "- \(currentQuoteAuthor)"
+        }
 
-    //private let quote: Quote = []
+        //scheduleLoadData()
+        
+    }
+    
     private let viewModel: ViewModel
     var favoriteBarItemSelected: Bool = false
+    
+    private let userDefaults = UserDefaults.standard
+    var timer: Timer?
     
     required init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -71,8 +83,33 @@ class ViewController: UIViewController {
             authorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-        
     }
+    
+    func scheduleLoadData(){
+        timer?.invalidate()
+        let currentDate = Date()
+        let calendar = Calendar.current
+        
+        // 9:00'a kadar olan süreyi hesapla
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: currentDate)
+        components.hour = 19
+        components.minute = 39
+        components.second = 00
+        let targetDate = calendar.date(from: components)!
+        
+        // Hedef tarihe kadar kalan süreyi hesapla
+        let timeInterval = targetDate.timeIntervalSince(currentDate)
+        
+        if timeInterval > 0{
+            print(timeInterval)
+            timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] timer in
+                
+                self?.viewModel.loadData()
+            }
+        }
+
+    }
+
     
     @objc func shareTapped(){
         
@@ -88,8 +125,11 @@ extension ViewController: ViewModelDelegate{
     func didUpdate() {
         DispatchQueue.main.async {
             let quote = self.viewModel.getQuote()
+            self.userDefaults.set(quote.content, forKey: "currentQuote")
+            self.userDefaults.set(quote.author, forKey: "currentQuoteAuthor")
             self.label.text = quote.content
             self.authorLabel.text = "- \(quote.author)"
+            
         }
     }
     
@@ -113,4 +153,3 @@ extension ViewController: UITabBarControllerDelegate{
         
     }
 }
-
