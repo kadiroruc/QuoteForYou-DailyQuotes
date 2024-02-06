@@ -1,6 +1,6 @@
 //
 //  NetworkConstant.swift
-//  AA
+//  QuoteForYou|DailyQuotes
 //
 //  Created by Abdulkadir Oruç on 3.02.2024.
 //
@@ -20,9 +20,15 @@ class Constants{
         }
     }
     
-    public var lastNotificationDateKey: String{
+    public var currentQuote: String{
         get{
-            return "lastNotificationDateKey"
+            return "currentQuote"
+        }
+    }
+    
+    public var currentQuoteAuthor: String{
+        get{
+            return "currentQuoteAuthor"
         }
     }
 

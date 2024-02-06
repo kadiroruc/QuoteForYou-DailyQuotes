@@ -1,6 +1,6 @@
 //
 //  ViewModel.swift
-//  AA
+//  QuoteForYou|DailyQuotes
 //
 //  Created by Abdulkadir Oruç on 3.02.2024.
 //
@@ -34,8 +34,23 @@ class ViewModel: NSObject, UNUserNotificationCenterDelegate{
         checkLastUpdateDate()
         
         loadFavoriteQuotes()
-        
-        
+    }
+    
+    func loadData(){
+        NetworkService.getQuote {[weak self] result in
+            switch result{
+            case let .success(quote):
+                self?.quote = quote
+                self?.delegate?.didUpdate()
+            
+            case let .failure(error):
+                self?.quote = []
+                self?.errorMessage = error
+            }
+        }
+    }
+    func getQuote() -> QuoteModel{
+        return quote[0]
     }
 
 
@@ -92,17 +107,11 @@ class ViewModel: NSObject, UNUserNotificationCenterDelegate{
                 userDefaults.set(previousUpdateDate, forKey: "previousUpdateTime")
             }
         }
-        
-
-        
-
-        
-
     }
     
     func scheduleNotification(){
         let content = UNMutableNotificationContent()
-        content.title = "App name"
+        content.title = "Quote For You | Daily Quotes"
         content.body = "Your Daily Quote is Ready"
         content.sound = .default
         
@@ -129,24 +138,6 @@ class ViewModel: NSObject, UNUserNotificationCenterDelegate{
 //    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 //        self.loadData()
 //    }
-    
-    
-    func loadData(){
-        NetworkService.getQuote {[weak self] result in
-            switch result{
-            case let .success(quote):
-                self?.quote = quote
-                self?.delegate?.didUpdate()
-            
-            case let .failure(error):
-                self?.quote = []
-                self?.errorMessage = error
-            }
-        }
-    }
-    func getQuote() -> QuoteModel{
-        return quote[0]
-    }
 
     
 }

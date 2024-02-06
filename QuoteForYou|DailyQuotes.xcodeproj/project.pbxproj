@@ -17,10 +17,12 @@
 		E93245922B6DFDC100C7AEB3 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93245912B6DFDC100C7AEB3 /* QuoteModel.swift */; };
 		E93245942B6E23F500C7AEB3 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93245932B6E23F500C7AEB3 /* ViewModel.swift */; };
 		E9E3733A2B711DD4003F51E8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9E373382B711DD4003F51E8 /* DataModel.xcdatamodeld */; };
+		E9E3733C2B712FC8003F51E8 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E3733B2B712FC8003F51E8 /* FavoritesViewController.swift */; };
+		E9E3733E2B71405A003F51E8 /* FavoritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E3733D2B71405A003F51E8 /* FavoritesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E93245762B6DFC3E00C7AEB3 /* AA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E93245762B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QuoteForYou|DailyQuotes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93245792B6DFC3E00C7AEB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E932457B2B6DFC3E00C7AEB3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E932457D2B6DFC3E00C7AEB3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -32,6 +34,8 @@
 		E93245912B6DFDC100C7AEB3 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
 		E93245932B6E23F500C7AEB3 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		E9E373392B711DD4003F51E8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		E9E3733B2B712FC8003F51E8 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		E9E3733D2B71405A003F51E8 /* FavoritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,10 +49,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E92A389E2B7274E7005BB45A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E93245792B6DFC3E00C7AEB3 /* AppDelegate.swift */,
+				E932457B2B6DFC3E00C7AEB3 /* SceneDelegate.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		E92A389F2B727534005BB45A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E93245822B6DFC3F00C7AEB3 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E92A38A02B72754D005BB45A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E9E3733D2B71405A003F51E8 /* FavoritesCollectionViewCell.swift */,
+				E93245842B6DFC3F00C7AEB3 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E92A38A22B727567005BB45A /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E932457D2B6DFC3E00C7AEB3 /* ViewController.swift */,
+				E9E3733B2B712FC8003F51E8 /* FavoritesViewController.swift */,
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
+		E92A38A32B72757A005BB45A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E93245912B6DFDC100C7AEB3 /* QuoteModel.swift */,
+				E9E373382B711DD4003F51E8 /* DataModel.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E92A38A42B72759C005BB45A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E93245932B6E23F500C7AEB3 /* ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E92A38A52B7275B1005BB45A /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				E932458D2B6DFCA400C7AEB3 /* Constants.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		E92A38A62B7275BA005BB45A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E932458F2B6DFCFF00C7AEB3 /* NetworkService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		E932456D2B6DFC3E00C7AEB3 = {
 			isa = PBXGroup;
 			children = (
-				E93245782B6DFC3E00C7AEB3 /* AA */,
+				E93245782B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes */,
 				E93245772B6DFC3E00C7AEB3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,35 +128,33 @@
 		E93245772B6DFC3E00C7AEB3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E93245762B6DFC3E00C7AEB3 /* AA.app */,
+				E93245762B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E93245782B6DFC3E00C7AEB3 /* AA */ = {
+		E93245782B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes */ = {
 			isa = PBXGroup;
 			children = (
-				E93245792B6DFC3E00C7AEB3 /* AppDelegate.swift */,
-				E932457B2B6DFC3E00C7AEB3 /* SceneDelegate.swift */,
-				E932457D2B6DFC3E00C7AEB3 /* ViewController.swift */,
-				E93245932B6E23F500C7AEB3 /* ViewModel.swift */,
-				E932458D2B6DFCA400C7AEB3 /* Constants.swift */,
-				E932458F2B6DFCFF00C7AEB3 /* NetworkService.swift */,
-				E93245912B6DFDC100C7AEB3 /* QuoteModel.swift */,
-				E93245822B6DFC3F00C7AEB3 /* Assets.xcassets */,
-				E93245842B6DFC3F00C7AEB3 /* LaunchScreen.storyboard */,
+				E92A389E2B7274E7005BB45A /* Core */,
+				E92A38A22B727567005BB45A /* View Controller */,
+				E92A38A02B72754D005BB45A /* View */,
+				E92A38A32B72757A005BB45A /* Model */,
+				E92A38A42B72759C005BB45A /* ViewModel */,
+				E92A38A52B7275B1005BB45A /* Constant */,
+				E92A38A62B7275BA005BB45A /* Services */,
+				E92A389F2B727534005BB45A /* Resources */,
 				E93245872B6DFC3F00C7AEB3 /* Info.plist */,
-				E9E373382B711DD4003F51E8 /* DataModel.xcdatamodeld */,
 			);
-			path = AA;
+			path = "QuoteForYou|DailyQuotes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E93245752B6DFC3E00C7AEB3 /* AA */ = {
+		E93245752B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E932458A2B6DFC3F00C7AEB3 /* Build configuration list for PBXNativeTarget "AA" */;
+			buildConfigurationList = E932458A2B6DFC3F00C7AEB3 /* Build configuration list for PBXNativeTarget "QuoteForYou|DailyQuotes" */;
 			buildPhases = (
 				E93245722B6DFC3E00C7AEB3 /* Sources */,
 				E93245732B6DFC3E00C7AEB3 /* Frameworks */,
@@ -94,9 +164,9 @@
 			);
 			dependencies = (
 			);
-			name = AA;
+			name = "QuoteForYou|DailyQuotes";
 			productName = AA;
-			productReference = E93245762B6DFC3E00C7AEB3 /* AA.app */;
+			productReference = E93245762B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -114,7 +184,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E93245712B6DFC3E00C7AEB3 /* Build configuration list for PBXProject "AA" */;
+			buildConfigurationList = E93245712B6DFC3E00C7AEB3 /* Build configuration list for PBXProject "QuoteForYou|DailyQuotes" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -127,7 +197,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E93245752B6DFC3E00C7AEB3 /* AA */,
+				E93245752B6DFC3E00C7AEB3 /* QuoteForYou|DailyQuotes */,
 			);
 		};
 /* End PBXProject section */
@@ -150,12 +220,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93245922B6DFDC100C7AEB3 /* QuoteModel.swift in Sources */,
+				E9E3733C2B712FC8003F51E8 /* FavoritesViewController.swift in Sources */,
 				E9E3733A2B711DD4003F51E8 /* DataModel.xcdatamodeld in Sources */,
 				E93245902B6DFCFF00C7AEB3 /* NetworkService.swift in Sources */,
 				E932458E2B6DFCA400C7AEB3 /* Constants.swift in Sources */,
 				E932457E2B6DFC3E00C7AEB3 /* ViewController.swift in Sources */,
 				E932457A2B6DFC3E00C7AEB3 /* AppDelegate.swift in Sources */,
 				E932457C2B6DFC3E00C7AEB3 /* SceneDelegate.swift in Sources */,
+				E9E3733E2B71405A003F51E8 /* FavoritesCollectionViewCell.swift in Sources */,
 				E93245942B6E23F500C7AEB3 /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,7 +370,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AA/Info.plist;
+				INFOPLIST_FILE = "QuoteForYou|DailyQuotes/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -327,7 +399,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AA/Info.plist;
+				INFOPLIST_FILE = "QuoteForYou|DailyQuotes/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -349,7 +421,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E93245712B6DFC3E00C7AEB3 /* Build configuration list for PBXProject "AA" */ = {
+		E93245712B6DFC3E00C7AEB3 /* Build configuration list for PBXProject "QuoteForYou|DailyQuotes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E93245882B6DFC3F00C7AEB3 /* Debug */,
@@ -358,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E932458A2B6DFC3F00C7AEB3 /* Build configuration list for PBXNativeTarget "AA" */ = {
+		E932458A2B6DFC3F00C7AEB3 /* Build configuration list for PBXNativeTarget "QuoteForYou|DailyQuotes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E932458B2B6DFC3F00C7AEB3 /* Debug */,

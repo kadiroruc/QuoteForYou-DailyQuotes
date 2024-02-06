@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  AA
+//  QuoteForYou|DailyQuotes
 //
 //  Created by Abdulkadir Oruç on 3.02.2024.
 //

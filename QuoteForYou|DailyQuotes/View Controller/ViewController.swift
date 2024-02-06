@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  AA
+//  QuoteForYou|DailyQuotes
 //
 //  Created by Abdulkadir Oruç on 3.02.2024.
 //
@@ -37,10 +37,10 @@ class ViewController: UIViewController {
         setupUI()
         navigationController?.tabBarController?.delegate = self
         
-        if let currentQuote = userDefaults.object(forKey: "currentQuote")as? String{
+        if let currentQuote = userDefaults.object(forKey: Constants.shared.currentQuote)as? String{
             label.text = currentQuote
         }
-        if let currentQuoteAuthor = userDefaults.object(forKey: "currentQuoteAuthor")as? String{
+        if let currentQuoteAuthor = userDefaults.object(forKey: Constants.shared.currentQuoteAuthor)as? String{
             authorLabel.text = "- \(currentQuoteAuthor)"
         }
 
@@ -88,12 +88,23 @@ class ViewController: UIViewController {
 
     
     @objc func shareTapped(){
-        
+        if let currentQuote = userDefaults.object(forKey: Constants.shared.currentQuote)as? String{
+            if let currentQuoteAuthor = userDefaults.object(forKey: Constants.shared.currentQuoteAuthor)as? String{
+                let text = "\(currentQuote)\n\n\(currentQuoteAuthor)"
+                
+                let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+                present(activityViewController, animated: true, completion: nil)
+            }
+        }
     }
     
     @objc func listTapped(){
         let favoriteQuotes = viewModel.getFavoriteQuotes()
         //print(favoriteQuotes[1].content)
+        let favoriteViewController = FavoritesViewController()
+        favoriteViewController.hidesBottomBarWhenPushed = true
+        favoriteViewController.favoriteQuotes = favoriteQuotes
+        navigationController?.pushViewController(favoriteViewController, animated: true)
     }
     
 }
@@ -102,8 +113,8 @@ extension ViewController: ViewModelDelegate{
     func didUpdate() {
         DispatchQueue.main.async {
             let quote = self.viewModel.getQuote()
-            self.userDefaults.set(quote.content, forKey: "currentQuote")
-            self.userDefaults.set(quote.author, forKey: "currentQuoteAuthor")
+            self.userDefaults.set(quote.content, forKey: Constants.shared.currentQuote)
+            self.userDefaults.set(quote.author, forKey: Constants.shared.currentQuoteAuthor)
             self.label.text = quote.content
             self.authorLabel.text = "- \(quote.author)"
             
@@ -124,10 +135,10 @@ extension ViewController: UITabBarControllerDelegate{
                 tabBarController.tabBar.items?[selectedIndex].image = UIImage(systemName: "heart.fill")
                 
                 
-                if let currentQuote = userDefaults.object(forKey: "currentQuote")as? String{
+                if let currentQuote = userDefaults.object(forKey: Constants.shared.currentQuote)as? String{
                     let quoteContent = currentQuote
 
-                    if let currentQuoteAuthor = userDefaults.object(forKey: "currentQuoteAuthor")as? String{
+                    if let currentQuoteAuthor = userDefaults.object(forKey: Constants.shared.currentQuoteAuthor)as? String{
                         let quoteAuthor = currentQuoteAuthor
 
                         viewModel.saveFavoriteQuote(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
@@ -139,6 +150,7 @@ extension ViewController: UITabBarControllerDelegate{
                 
             }else{
                 tabBarController.tabBar.items?[selectedIndex].image = UIImage(systemName: "heart")
+                
             }
         }
         
