@@ -12,7 +12,7 @@ A mobile app where you can view quotes on a daily basis, receive notifications a
 
 **Backend**:  `API Networking, Core Data`
 
-**UI**:  `Storyboard, Auto Layouts`
+**UI**:  `Programatic UI, Anchor Layouts`
 
 
 ## Contributing
